@@ -1,6 +1,6 @@
 import { n as __exportAll } from "../_runtime.mjs";
 import { r as require_react } from "../_libs/@hookform/resolvers+[...].mjs";
-import { A as invariant, D as resolveManifestCssLink, E as resolveManifestAssetLink, I as rootRouteId, L as isNotFound, N as isRedirect, O as _getRenderedMatches, P as isResolvedRedirect, T as getStylesheetHref, a as isSsrResponse, c as stripSsrResponseBody, f as RouterProvider, i as disposeSsrResponseDetached, k as executeRewriteInput, n as bindSsrResponseToRequest, o as normalizeSsrResponse, r as defineHandlerCallback, s as replaceSsrResponse, t as renderRouterToStream, w as getScriptPreloadAttrs } from "../_libs/@tanstack/react-router+[...].mjs";
+import { A as invariant, D as resolveManifestCssLink, E as resolveManifestAssetLink, F as isRedirect, I as rootRouteId, L as isNotFound, N as isDangerousProtocol, O as _getRenderedMatches, T as getStylesheetHref, a as isSsrResponse, c as stripSsrResponseBody, f as RouterProvider, i as disposeSsrResponseDetached, k as executeRewriteInput, n as bindSsrResponseToRequest, o as normalizeSsrResponse, r as defineHandlerCallback, s as replaceSsrResponse, t as renderRouterToStream, w as getScriptPreloadAttrs } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as createMemoryHistory } from "../_libs/tanstack__history.mjs";
 import { a as getOrigin, c as createSerializationAdapter, d as toCrossJSONAsync, f as toCrossJSONStream, i as getNormalizedURL, l as makeSerovalPlugin, n as mergeHeaders, o as defaultSerovalPlugins, r as attachRouterServerSsrUtils, s as createRawStreamRPCPlugin, t as waitForRequest, u as fromJSON } from "../_libs/@tanstack/router-core+[...].mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
@@ -86,7 +86,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-C9pCzX2z.mjs");
+	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-DEMymNAo.mjs");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -1193,7 +1193,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./router-BluC30HL.mjs").then((n) => n.t),
+		import("./router-BGx_euVk.mjs").then((n) => n.t),
 		import("./start-5Z2QO8AU.mjs"),
 		import("./empty-plugin-adapters-D9UWiqvJ.mjs")
 	]);
@@ -1470,7 +1470,7 @@ function createStartHandler(cbOrOptions) {
 					handlerType: "serverFn",
 					context: createNullProtoObject(requestOpts?.context)
 				}, request.signal);
-				const result = await handleRedirectResponse(middlewareResponse, request, getRouter, request.signal);
+				const result = await handleRedirectResponse(middlewareResponse, getRouter, request.signal, request.headers.get("x-tsr-serverFn") === "true");
 				bindSsrResponseToRequest(router ?? void 0, result, request.signal);
 				request.signal.throwIfAborted();
 				responseOwnsCleanup = result.serverSsrCleanup === "stream";
@@ -1545,7 +1545,7 @@ function createStartHandler(cbOrOptions) {
 				handlerType: "router",
 				context: createNullProtoObject(requestOpts?.context)
 			}, request.signal);
-			const response = await handleRedirectResponse(middlewareResponse, request, getRouter, request.signal);
+			const response = await handleRedirectResponse(middlewareResponse, getRouter, request.signal, false);
 			bindSsrResponseToRequest(router ?? void 0, response, request.signal);
 			request.signal.throwIfAborted();
 			responseOwnsCleanup = response.serverSsrCleanup === "stream";
@@ -1557,32 +1557,39 @@ function createStartHandler(cbOrOptions) {
 	};
 	return requestHandler(startRequestResolver);
 }
-async function handleRedirectResponse(response, request, getRouter, signal) {
+var relativeRedirectProtocols = /* @__PURE__ */ new Set();
+async function handleRedirectResponse(response, getRouter, signal, serializeRedirect) {
 	signal.throwIfAborted();
 	const ssrResponse = normalizeSsrResponse(response);
 	if (!isRedirect(ssrResponse.response)) return ssrResponse;
-	if (isResolvedRedirect(ssrResponse.response)) {
-		if (request.headers.get("x-tsr-serverFn") === "true") return waitForRequest(replaceSsrResponse(ssrResponse, Response.json({
-			...ssrResponse.response.options,
-			isSerializedRedirect: true
-		}, { headers: ssrResponse.response.headers }), "redirect response replaced"), signal);
-		return ssrResponse;
-	}
 	const opts = ssrResponse.response.options;
-	if (opts.to && typeof opts.to === "string" && !opts.to.startsWith("/")) throw new Error(`Server side redirects must use absolute paths via the 'href' or 'to' options. The redirect() method's "to" property accepts an internal path only. Use the "href" property to provide an external URL. Received: ${JSON.stringify(opts)}`);
-	if ([
+	const href = ssrResponse.response.headers.get("Location") || opts.href;
+	if (!href && opts.to && typeof opts.to === "string" && !opts.to.startsWith("/")) throw new Error(`Server side redirects must use absolute paths via the 'href' or 'to' options. The redirect() method's "to" property accepts an internal path only. Use the "href" property to provide an external URL. Received: ${JSON.stringify(opts)}`);
+	if (!href && [
 		"params",
 		"search",
 		"hash"
 	].some((d) => typeof opts[d] === "function")) throw new Error(`Server side redirects must use static search, params, and hash values and do not support functional values. Received functional values for: ${Object.keys(opts).filter((d) => typeof opts[d] === "function").map((d) => `"${d}"`).join(", ")}`);
 	signal.throwIfAborted();
-	const router = await waitForRequest(getRouter(), signal);
-	signal.throwIfAborted();
-	const redirect = router.resolveRedirect(ssrResponse.response);
-	if (request.headers.get("x-tsr-serverFn") === "true") return waitForRequest(replaceSsrResponse(ssrResponse, Response.json({
-		...ssrResponse.response.options,
-		isSerializedRedirect: true
-	}, { headers: ssrResponse.response.headers }), "redirect response replaced"), signal);
+	let redirect = ssrResponse.response;
+	if (href && !isDangerousProtocol(href, relativeRedirectProtocols)) {
+		redirect.options.href = href;
+		redirect.headers.set("Location", href);
+	} else {
+		const router = await waitForRequest(getRouter(), signal);
+		signal.throwIfAborted();
+		redirect = router.resolveRedirect(redirect);
+	}
+	if (serializeRedirect) {
+		const redirectOptions = { ...redirect.options };
+		delete redirectOptions.headers;
+		const responseHeaders = new Headers(redirect.headers);
+		responseHeaders.set("content-type", "application/json");
+		return waitForRequest(replaceSsrResponse(ssrResponse, Response.json({
+			...redirectOptions,
+			isSerializedRedirect: true
+		}, { headers: responseHeaders }), "redirect response replaced"), signal);
+	}
 	return waitForRequest(replaceSsrResponse(ssrResponse, redirect, "redirect response replaced"), signal);
 }
 async function handleServerRoutes({ getRouter, request, url, executeRouter, context, executedRequestMiddlewares }) {
@@ -1627,7 +1634,7 @@ async function handleServerRoutes({ getRouter, request, url, executeRouter, cont
 	}, request.signal);
 	if (isHeadFallback) {
 		if (!ctx.response) throwRouteHandlerError();
-		return waitForRequest(stripSsrResponseBody(await handleRedirectResponse(response, request, getRouter, request.signal), "HEAD body stripped"), request.signal);
+		return waitForRequest(stripSsrResponseBody(await handleRedirectResponse(response, getRouter, request.signal, false), "HEAD body stripped"), request.signal);
 	}
 	return normalizeSsrResponse(response);
 }
