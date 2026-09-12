@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Jeremy Quiroz",
+      "hasCanvas": false,
+      "bodyTextLen": 5177,
+      "bodyTextHash": "e70d85e7c23d2f5e9daefe2ec0ff342a9504790fcd477b93badc45932f296f90",
+      "bodyTextPrefix": "Skip to content Jeremy Quiroz About Experience Projects Skills C",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Jeremy Quiroz",
+      "hasCanvas": false,
+      "bodyTextLen": 5129,
+      "bodyTextHash": "1c8b3b8a70ae9ef3c1603267db9634b86a56aadfc1b0c82dc0bfc31583192409",
+      "bodyTextPrefix": "Skip to content Jeremy Quiroz OPEN TO FULL-TIME ROLES Jeremy Rya",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
