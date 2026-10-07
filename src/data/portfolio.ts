@@ -103,11 +103,87 @@ export type Project = {
   categories: Exclude<ProjectFilter, "All">[];
   technologies: string[];
   features: string[];
+  status?: "Architecture" | "In development" | "Local demo";
   githubUrl?: string;
   liveUrl?: string;
 };
 
 export const projects: Project[] = [
+  {
+    slug: "aurelia-books",
+    name: "Aurelia Books",
+    tagline: "Accounting & bookkeeping for business",
+    description:
+      "A QuickBooks-inspired accounting workspace for small businesses. The local demo brings invoicing, expense tracking, bank reconciliation, inventory, and financial reporting into one application.",
+    role: "Full-Stack Development",
+    status: "Local demo",
+    categories: ["Development"],
+    technologies: ["React", "TypeScript", "Express", "PostgreSQL", "Prisma", "Tailwind CSS"],
+    features: [
+      "Invoice, bill, expense, and payment workflows",
+      "Bank CSV imports, transaction matching, and reconciliation",
+      "Inventory tracking and cost-of-goods calculations",
+      "Double-entry journals, ledger reports, and financial summaries",
+      "Role-based access across companies",
+    ],
+  },
+  {
+    slug: "parley",
+    name: "Parley",
+    tagline: "News & discussion platform architecture",
+    description:
+      "System design and data modeling for a news and discussion platform, formerly Echo. The architecture defines separate User, Post, Article, and Subscription services with document-style schemas and cross-service ID references.",
+    role: "System Design & Data Modeling",
+    status: "Architecture",
+    categories: ["Development", "Business Analysis"],
+    technologies: ["ERD", "Data Modeling", "Database Design", "Service Architecture"],
+    features: [
+      "Four service boundaries with a dedicated database for each service",
+      "Document schemas with embedded objects and cross-service ID references",
+      "Models for article bookmarks, reading progress, and coverage comparison",
+      "Discussion, moderation, and subscription data models",
+    ],
+  },
+  {
+    slug: "orbit-budget",
+    name: "Orbit Budget",
+    tagline: "Income, expenses & savings in one place",
+    description:
+      "A personal finance app in development for tracking income, expenses, savings transfers, and monthly spending budgets. The implementation brings transaction management, spending summaries, and account-based storage into a responsive dashboard.",
+    role: "Full-Stack Development",
+    status: "In development",
+    categories: ["Development"],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "React", "PostgreSQL"],
+    features: [
+      "Transaction creation, editing, deletion, and custom categories",
+      "Monthly income and expense summaries, spending charts, and budgets",
+      "Savings deposits and withdrawals with balance validation",
+      "Search, date and category filters, and CSV export",
+      "Supabase authentication and PostgreSQL row-level security",
+    ],
+  },
+  {
+    slug: "job-application-tracker",
+    name: "Job Application Tracker",
+    tagline: "A clearer view of the job search",
+    description:
+      "An application for organizing job applications and tracking their progress through the hiring process, bringing application records and status updates together.",
+    role: "Software Development",
+    categories: ["Development"],
+    technologies: [],
+    features: ["Job application tracking", "Application status management"],
+  },
+  {
+    slug: "web-auction-management",
+    name: "Web Auction Management System",
+    tagline: "Auction listings & online bidding",
+    description:
+      "A web-based auction management project covering auction listings and online bidding workflows.",
+    role: "Software Development",
+    categories: ["Development"],
+    technologies: [],
+    features: ["Auction listing management", "Online bidding workflows"],
+  },
   {
     slug: "lakbay",
     name: "Lakbay",

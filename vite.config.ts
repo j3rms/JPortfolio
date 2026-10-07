@@ -140,13 +140,13 @@ function authPopupPlugin(): Plugin {
   };
 }
 
-// The local development server binds all interfaces on port 5173.
+// The local development server binds all interfaces on port 8080.
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
   server: {
     host: "0.0.0.0",
-    port: 5173,
+    port: 8080,
     strictPort: true,
   },
   preview: {

@@ -5,12 +5,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { SectionHeading } from "@/components/site/section-heading";
 
 export function Projects() {
@@ -28,8 +23,8 @@ export function Projects() {
         <SectionHeading
           index="03"
           eyebrow="Projects"
-          title="Selected work"
-          description="Software, analytics, and the operational systems in between."
+          title="Recent & selected work"
+          description="Recent builds, system design, and hands-on work across software and analytics."
         />
 
         <div
@@ -60,6 +55,11 @@ export function Projects() {
           {visible.map((project) => (
             <Card key={project.slug} className="flex flex-col">
               <CardContent className="flex h-full flex-col p-6">
+                {project.status ? (
+                  <div className="mb-4">
+                    <Badge variant="accent">{project.status}</Badge>
+                  </div>
+                ) : null}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground uppercase">
@@ -74,21 +74,24 @@ export function Projects() {
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {project.description}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {project.technologies.slice(0, 4).map((tech) => (
-                    <Badge key={tech} variant="muted">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 4 ? (
-                    <Badge variant="muted">+{project.technologies.length - 4}</Badge>
-                  ) : null}
-                </div>
+                {project.technologies.length > 0 ? (
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <Badge key={tech} variant="muted">
+                        {tech}
+                      </Badge>
+                    ))}
+                    {project.technologies.length > 4 ? (
+                      <Badge variant="muted">+{project.technologies.length - 4}</Badge>
+                    ) : null}
+                  </div>
+                ) : null}
                 <div className="mt-5 flex flex-wrap gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     className="rounded-full"
+                    aria-label={`View details for ${project.name}`}
                     onClick={() => setSelected(project)}
                   >
                     View details
@@ -104,27 +107,38 @@ export function Projects() {
       <Dialog open={Boolean(selected)} onOpenChange={(open) => !open && setSelected(null)}>
         {selected ? (
           <DialogContent>
+            {selected.status ? (
+              <div className="mb-4 pr-10">
+                <Badge variant="accent">{selected.status}</Badge>
+              </div>
+            ) : null}
             <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground uppercase">
               {selected.role}
             </p>
             <DialogTitle className="mt-1">{selected.name}</DialogTitle>
             <DialogDescription className="mt-2">{selected.description}</DialogDescription>
-            <div className="mt-5">
-              <p className="text-sm font-medium">Key features</p>
-              <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
-                {selected.features.map((feature) => (
-                  <li key={feature} className="flex gap-2">
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
-                    {feature}
-                  </li>
+            {selected.features.length > 0 ? (
+              <div className="mt-5">
+                <p className="text-sm font-medium">
+                  {selected.status === "Architecture" ? "Design scope" : "Key features"}
+                </p>
+                <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+                  {selected.features.map((feature) => (
+                    <li key={feature} className="flex gap-2">
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {selected.technologies.length > 0 ? (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {selected.technologies.map((tech) => (
+                  <Badge key={tech}>{tech}</Badge>
                 ))}
-              </ul>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {selected.technologies.map((tech) => (
-                <Badge key={tech}>{tech}</Badge>
-              ))}
-            </div>
+              </div>
+            ) : null}
             <div className="mt-6 flex flex-wrap gap-2">
               <ProjectLinks project={selected} />
             </div>

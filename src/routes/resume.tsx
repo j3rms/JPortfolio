@@ -29,7 +29,7 @@ function ResumePage() {
             <p className="mt-2 text-sm font-medium">{profile.headline}</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{profile.summary}</p>
             <p className="mt-4 text-sm text-muted-foreground">
-              {profile.location}  ·  {profile.email}  ·  {profile.availability}
+              {profile.location} · {profile.email} · {profile.availability}
             </p>
           </header>
 
@@ -38,7 +38,9 @@ function ResumePage() {
               Education
             </h2>
             <p className="mt-2 font-medium">{profile.education.degree}</p>
-            <p className="text-sm text-muted-foreground">{profile.education.honors.join("  ·  ")}</p>
+            <p className="text-sm text-muted-foreground">
+              {profile.education.honors.join("  ·  ")}
+            </p>
           </section>
 
           <section className="mt-8">
@@ -69,15 +71,22 @@ function ResumePage() {
               {projects.map((project) => (
                 <div key={project.slug}>
                   <p className="font-medium">
-                    {project.name}  ·  {project.role}
+                    {project.name} · {project.role}
                   </p>
+                  {project.status ? (
+                    <p className="mt-1 text-sm text-muted-foreground">{project.status}</p>
+                  ) : null}
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {project.description}
                   </p>
-                  <p className="mt-1 text-sm">{project.features.join("  ·  ")}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {project.technologies.join(", ")}
-                  </p>
+                  {project.features.length > 0 ? (
+                    <p className="mt-1 text-sm">{project.features.join("  ·  ")}</p>
+                  ) : null}
+                  {project.technologies.length > 0 ? (
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {project.technologies.join(", ")}
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </div>

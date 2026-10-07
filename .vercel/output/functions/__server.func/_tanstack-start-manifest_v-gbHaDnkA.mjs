@@ -1,0 +1,25 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-gbHaDnkA.js
+var tsrStartManifest = () => ({ routes: {
+	__root__: {
+		filePath: "C:/Users/Jeremy/Downloads/OexfuToTukKTQ7Qj-grok-workspace/src/routes/__root.tsx",
+		children: ["/", "/resume"],
+		preloads: ["/assets/index-BNUdzkrr.js"],
+		scripts: [{ attrs: {
+			type: "module",
+			async: !0,
+			src: "/assets/index-BNUdzkrr.js"
+		} }]
+	},
+	"/": {
+		filePath: "C:/Users/Jeremy/Downloads/OexfuToTukKTQ7Qj-grok-workspace/src/routes/index.tsx",
+		children: void 0,
+		preloads: ["/assets/routes-BTDkgQuf.js", "/assets/site-shell-CwtXWLfW.js"]
+	},
+	"/resume": {
+		filePath: "C:/Users/Jeremy/Downloads/OexfuToTukKTQ7Qj-grok-workspace/src/routes/resume.tsx",
+		children: void 0,
+		preloads: ["/assets/resume-D4gawYz0.js", "/assets/site-shell-CwtXWLfW.js"]
+	}
+} });
+//#endregion
+export { tsrStartManifest };

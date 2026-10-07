@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/#projects",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Jeremy Quiroz",
+      "hasCanvas": false,
+      "bodyTextLen": 6861,
+      "bodyTextHash": "615936913af268ca8af2e503c91ec269263e9e6319e093fff0bcd1d356d21e88",
+      "bodyTextPrefix": "Skip to content Jeremy Quiroz About Experience Projects Skills C",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "C:\\Users\\Jeremy\\Downloads\\OexfuToTukKTQ7Qj-grok-workspace\\screenshots\\projects-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Jeremy Quiroz",
+      "hasCanvas": false,
+      "bodyTextLen": 6813,
+      "bodyTextHash": "ce562b1d1a392c5bdd457d09fa5b669e3c3e28b76942f1835e9586554de12dca",
+      "bodyTextPrefix": "Skip to content Jeremy Quiroz OPEN TO FULL-TIME ROLES Jeremy Rya",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "C:\\Users\\Jeremy\\Downloads\\OexfuToTukKTQ7Qj-grok-workspace\\screenshots\\projects-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "C:\\Users\\Jeremy\\Downloads\\OexfuToTukKTQ7Qj-grok-workspace\\screenshots\\projects-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}
